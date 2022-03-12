@@ -1,32 +1,31 @@
 class Solution {
 public:
-    void helper(vector<int>& candidates, int target, vector<vector<int>>& result, vector<int> combination, int currSum, int currIdx){
+    int n;
+    
+    void helper(vector<int>& candidates, int idx, int target, vector<vector<int>>& res, vector<int>& comb){
         
-        if(currSum > target)
-            return;
-        
-        if(currSum == target){
-            result.push_back(combination);
+        if(target == 0){
+            res.push_back(comb);
             return;
         }
-        
-        for(int i=currIdx; i<candidates.size(); i++){
             
-            int num = candidates[i];
-            currSum += num;
-            combination.push_back(num);
-            helper(candidates, target, result, combination, currSum, i);
-            currSum -= num;
-            combination.pop_back();
-  
+        if(idx >= n)
+            return;
+        
+        if(candidates[idx] <= target){
+            comb.push_back(candidates[idx]);
+            helper(candidates, idx, target-candidates[idx], res, comb);
+            comb.pop_back();
         }
+        helper(candidates, idx+1, target, res, comb);
     }
     
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        n = candidates.size();
+        vector<vector<int>> res;
+        vector<int> comb;
+        helper(candidates, 0, target, res, comb);
         
-        vector<vector<int>> result;
-        helper(candidates, target, result, {}, 0, 0);
-        return result;
-        
+        return res;
     }
 };

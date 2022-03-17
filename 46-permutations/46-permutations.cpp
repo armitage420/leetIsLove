@@ -1,33 +1,35 @@
 class Solution {
 public:
-    void helper(vector<int>& nums, vector<vector<int>>& res, vector<int>& permute, int arr[], int n){
-        if(permute.size() >= n){
-            res.push_back(permute);
+    template <typename T>
+    void swap(T& x, T& y){
+        T z = x;
+        x = y;
+        y = z;
+    }
+    
+    void helper(vector<int>& nums, int n, vector<vector<int>>& res, int idx){
+
+        if(idx >= n){
+
+            res.push_back(nums);
             return;
         }
         
-        for(int i=0; i<n; i++){
-            if(!arr[i]){
-                arr[i] = 1;
-                
-                permute.push_back(nums[i]);
-                helper(nums, res, permute, arr, n);
-                permute.pop_back();
-                
-                arr[i] = 0;
-            }
+        for(int i=idx; i<n; i++){
+    
+            swap(nums[idx], nums[i]);
+            helper(nums, n, res, idx+1);
+            swap(nums[idx], nums[i]);
+            
         }
+        
     }
     
     vector<vector<int>> permute(vector<int>& nums) {
-        int n = nums.size();
-        
         vector<vector<int>> res;
-        vector<int> permute;
-        int arr[n];
-        memset(arr, 0, sizeof(arr));
         
-        helper(nums, res, permute, arr, n);
+        helper(nums, nums.size(), res, 0);
+        
         return res;
     }
 };

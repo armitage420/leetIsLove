@@ -15,11 +15,26 @@ public:
         if(root == NULL)
             return;
         
-        helper(root->left, res);
-        helper(root->right, res);
+        stack<TreeNode*> recursion;
+        stack<int> result;
         
-        res.push_back(root->val);
+        recursion.push(root);
         
+        while(!recursion.empty()){
+            TreeNode* currNode = recursion.top();
+            recursion.pop();
+            
+            result.push(currNode->val);
+            if(currNode->left)
+                recursion.push(currNode->left);
+            if(currNode->right)
+                recursion.push(currNode->right);
+        }
+        
+        while(!result.empty()){
+            res.push_back(result.top());
+            result.pop();
+        }
     }
     
     vector<int> postorderTraversal(TreeNode* root) {

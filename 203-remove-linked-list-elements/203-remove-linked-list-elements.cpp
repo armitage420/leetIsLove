@@ -15,15 +15,10 @@ public:
             return head;
         
         if(head->val == val){
-            
-            if(head->next == NULL)
-                return head->next;
-            
-            head = removeElements(head->next, val);
+            return removeElements(head->next, val);
         }
         
-        if(head != NULL)
-            head->next = removeElements(head->next, val);
+        head->next = removeElements(head->next, val);
         return head;
     }
 };

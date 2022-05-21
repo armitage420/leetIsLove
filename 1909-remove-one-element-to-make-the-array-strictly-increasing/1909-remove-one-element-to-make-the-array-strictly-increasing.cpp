@@ -2,22 +2,21 @@ class Solution {
 public:
     bool canBeIncreasing(vector<int>& nums) {
         int n = nums.size();
+        if(n == 2)
+            return true;
         
-        for(int i=0; i<n; i++){
-            bool flag = true;
-            for(int j=1; j<n; j++){
-                if(j==i)
-                    continue;
-                if((i != 0 && j-1 == i && nums[j-2] >= nums[j]) || (j-1 != i && nums[j-1] >= nums[j])){
-                    flag = false;
-                    break;
+        int count_violation = 0;
+        
+        for(int i=0; i<n-1 && count_violation < 2; i++){
+            if(nums[i] >= nums[i+1]){
+                count_violation++;
+                
+                if(i > 0 && nums[i+1] <= nums[i-1]){
+                    nums[i+1] = nums[i];
                 }
             }
-            
-            if(flag)
-                return flag;
         }
         
-        return false;
+        return count_violation < 2; 
     }
 };

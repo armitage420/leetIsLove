@@ -5,7 +5,7 @@ public:
         unordered_map<int, int> targetIndexMapping;
         
         for(int i=0; i<n; i++){
-            if(targetIndexMapping.count(target-nums[i]) && targetIndexMapping[target-nums[i]] != i){
+            if(targetIndexMapping.count(target-nums[i])){
                 return {targetIndexMapping[target-nums[i]], i};
             }
             

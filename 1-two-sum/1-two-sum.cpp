@@ -1,20 +1,15 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        unordered_map<int, int> targetIndexMapping;
         
-        unordered_map<int, int> hmap;
-        for(int i=0; i<nums.size(); i++){
-            hmap[nums[i]] = i;
-        }
-        
-        vector<int> res;
-        
-        for(int i=0; i<nums.size(); i++){
-            int key = target - nums[i];
-            
-            if(hmap.count(key) && hmap[key] != i){
-                return {i, hmap[key]};
+        for(int i=0; i<n; i++){
+            if(targetIndexMapping.count(target-nums[i]) && targetIndexMapping[target-nums[i]] != i){
+                return {targetIndexMapping[target-nums[i]], i};
             }
+            
+            targetIndexMapping[nums[i]] = i;
         }
         
         return {};

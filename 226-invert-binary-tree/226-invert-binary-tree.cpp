@@ -15,12 +15,22 @@ public:
         if(!root)
             return root;
         
-        invertTree(root->left);
-        invertTree(root->right);
+        queue<TreeNode*> q;
+        q.push(root);
         
-        TreeNode* temp = root->left;
-        root->left = root->right;
-        root->right = temp;
+        while(!q.empty()){
+            TreeNode* temp = q.front();
+            q.pop();
+            
+            if(temp->left) 
+                q.push(temp->left);
+            if(temp->right)
+                q.push(temp->right);
+            
+            TreeNode* copy = temp->left;
+            temp->left = temp->right;
+            temp->right = copy;
+        }
         
         return root;
     }
